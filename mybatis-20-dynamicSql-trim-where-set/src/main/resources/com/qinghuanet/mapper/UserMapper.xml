@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.UserMapper">
+
+    <!--使用where标签查询-->
+    <select id="findWithWhere" parameterType="User" resultType="User">
+        select * from user
+        <where>
+            <if test="name != null and name.length() > 0">
+                and name = #{name}
+            </if>
+            <if test="mobile != null and mobile.length() > 0">
+                and mobile = #{mobile}
+            </if>
+        </where>
+    </select>
+
+    <!--使用set标签修改-->
+    <update id="updateWithSet" parameterType="User">
+        update user
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="email != null">email = #{email},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--使用trim标签查询-->
+    <select id="findWithTrim" parameterType="User" resultType="User">
+        select * from user
+        <!--
+            prefix          ：前缀
+            prefixOverrides ：去掉第一个前缀
+
+            结果：select * from user where name = #{name} and mobile = #{mobile}
+        -->
+        <trim prefix="where" prefixOverrides="and |or">
+            <if test="name != null and name.length() > 0">
+                and name = #{name}
+            </if>
+            <if test="mobile != null and mobile.length() > 0">
+                and mobile = #{mobile}
+            </if>
+        </trim>
+    </select>
+
+    <!--使用trim标签修改-->
+    <update id="updateWithTrim" parameterType="User">
+        update user
+        <!--
+            prefix          ：前缀
+            suffixOverrides ：去掉最后一个前缀
+            suffix          ：后缀
+
+            结果：update user set name = #{name}, mobile = #{mobile}, birthday = #{birthday}, email = #{email} where id = #{id}
+        -->
+        <trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+            <if test="name != null">name = #{name},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="email != null">email = #{email},</if>
+        </trim>
+    </update>
+</mapper>

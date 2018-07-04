@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.UserMapper">
+
+    <!--根据姓名和电话号码模糊查询-->
+    <select id="findWithLike" parameterType="User" resultType="User">
+        select * from user
+        <where>
+            <if test="name != null and name != ''">
+                and name like "%"#{name}"%"
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile like "%"#{mobile}"%"
+            </if>
+        </where>
+    </select>
+</mapper>

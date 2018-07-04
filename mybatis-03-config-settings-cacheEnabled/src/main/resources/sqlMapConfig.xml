@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--加载外部的属性文件-->
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!--
+            开启二级缓存，但这还不够，因为这是全局的，仅表示可以使用缓存。如果希望某个namespace应用二级缓存，需要在该namespace中另外声明
+
+            有效值：
+                true    :开启二级缓存
+                false   :关闭二级缓存
+
+            默认值：true
+
+            注意：
+                1、二级缓存是以namespace为单位的，不同namespace下的操作互不影响
+                2、insert,update,delete操作会自动清空所在namespace下的所有缓存（防止出现脏读）
+
+            建议尽量避免使用二级缓存
+        -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!--开启类型别名，仅用于减少类完全限定名的冗余-->
+    <typeAliases>
+        <package name="com.qinghuanet.domain"/>
+    </typeAliases>
+
+    <!--环境配置-->
+    <environments default="development">
+        <!--开发环境-->
+        <environment id="development">
+            <!--事务类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com\qinghuanet\mapper\UserMapper.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.CityMapper">
+
+    <resultMap id="cityMap" type="City">
+        <association property="province" javaType="Province" column="pid" select="com.qinghuanet.mapper.ProvinceMapper.findById"/>
+        <collection property="districts" ofType="District" column="id" select="com.qinghuanet.mapper.DistrictMapper.findByCityId"/>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="cityMap">
+        select * from city where id = #{id}
+    </select>
+
+    <select id="findByProvinceId" parameterType="int" resultMap="cityMap">
+        select * from city where pid = #{provinceId}
+    </select>
+</mapper>

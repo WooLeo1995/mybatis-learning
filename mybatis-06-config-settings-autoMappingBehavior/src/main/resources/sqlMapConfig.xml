@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--加载外部的属性文件-->
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!--
+            指示MyBatis应如何自动映射数据库列数据到JavaBean的属性
+            有效值：
+                NONE    ：取消自动映射
+                PARTIAL ：仅自动映射没有定义嵌套结果集的映射配置（仅映射没有关联级别对象的JavaBean）
+                FULL    ：自动映射任意复杂的结果集（无论是否嵌套）
+
+            默认值：PARTIAL
+
+            备注：
+                当resultMap中没有设置对应的result映射配置，此设置会帮助我们进行自动映射
+                但前提条件是属性名和字段名要保存一致，且结果集中的字段名称不能有重复
+
+                此设置在有大量字段需要映射时非常有用
+        -->
+        <setting name="autoMappingBehavior" value="FULL"/>
+    </settings>
+
+    <!--开启类型别名，仅用于减少类完全限定名的冗余-->
+    <typeAliases>
+        <package name="com.qinghuanet.domain"/>
+    </typeAliases>
+
+    <!--环境配置-->
+    <environments default="development">
+        <!--开发环境-->
+        <environment id="development">
+            <!--事务类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com\qinghuanet\mapper\UserMapper.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--加载外部的属性文件-->
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!--
+            延迟加载的全局开关，所有关联对象都会延迟加载。特定的关联关系可通过设置fetchType属性来覆盖该开关状态
+
+            有效值：
+                true    :开启延迟加载
+                false   :关闭延迟加载
+
+            默认值：
+                false
+        -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+
+        <!--
+            当开启时，调用查询对象的任何方法，关联对象将立即被加载，否则只有关联对象被使用时才被加载
+
+			有效值：
+				true:	开启积极加载
+				false:	关闭积极加载
+
+			默认值：	false
+			    3.4.1版本（含）之前默认值为true
+		 -->
+        <setting name="aggressiveLazyLoading" value="true"/>
+    </settings>
+
+    <!--开启类型别名，仅用于减少类完全限定名的冗余-->
+    <typeAliases>
+        <package name="com.qinghuanet.domain"/>
+    </typeAliases>
+
+    <!--环境配置-->
+    <environments default="development">
+        <!--开发环境-->
+        <environment id="development">
+            <!--事务类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com\qinghuanet\mapper\UserMapper.xml"/>
+        <mapper resource="com\qinghuanet\mapper\DistrictMapper.xml"/>
+    </mappers>
+</configuration>

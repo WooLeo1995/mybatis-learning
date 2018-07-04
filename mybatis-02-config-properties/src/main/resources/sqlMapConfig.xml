@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--
+        属性配置的加载顺序：
+            resource引入的外部属性 > property子元素属性 > SqlSessionFactoryBuilder类中build方法传递的属性
+
+        备注：后加载的属性会覆盖先加载的属性
+    -->
+
+    <!--加载外部的属性文件-->
+    <properties resource="db.properties">
+
+        <!--Mybatis 3.4.2 开始，可为占位符指定一个默认值，如果在属性配置中找不到相应的配置则使用默认值；
+            此特性默认是关闭的，使用如下配置开启-->
+        <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/>
+
+        <!--子元素配置-->
+        <property name="username" value="root"></property>
+        <property name="password" value="123"></property>
+    </properties>
+
+    <!--开启类型别名，仅用于减少类完全限定名的冗余-->
+    <typeAliases>
+        <package name="com.qinghuanet.domain"/>
+    </typeAliases>
+
+    <!--环境配置-->
+    <environments default="development">
+        <!--开发环境-->
+        <environment id="development">
+            <!--事务类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${username:root}"/><!--冒号后面指定的是默认值-->
+                <property name="password" value="${password:root}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com\qinghuanet\mapper\UserMapper.xml"/>
+    </mappers>
+</configuration>

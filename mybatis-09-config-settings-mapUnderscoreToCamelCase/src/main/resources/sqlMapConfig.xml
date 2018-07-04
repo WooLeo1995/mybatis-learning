@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--加载外部的属性文件-->
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!--
+            指示是否开启自动驼峰命名规则（camel case）映射
+            即从经典数据库列名 a_column 到经典 Java 属性名 aColumn 的类似映射
+            有效值：
+                true    ：开启
+                false   ：关闭
+
+            默认值：false
+        -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--开启类型别名，仅用于减少类完全限定名的冗余-->
+    <typeAliases>
+        <package name="com.qinghuanet.domain"/>
+    </typeAliases>
+
+    <!--环境配置-->
+    <environments default="development">
+        <!--开发环境-->
+        <environment id="development">
+            <!--事务类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com\qinghuanet\mapper\UserMapper.xml"/>
+    </mappers>
+</configuration>

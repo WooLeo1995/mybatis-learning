@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.UserMapper">
+
+    <resultMap id="userMap" type="User">
+        <!--自动映射-->
+
+        <!--关联对象-->
+        <association property="district" javaType="District">
+            <!--自动映射-->
+        </association>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="userMap">
+        select u.id userId, u.name, u.mobile, u.birthday, u.email, d.id districtId, d.name districtName
+          from user u, district d
+          where u.did = d.id and u.id = #{id}
+    </select>
+</mapper>

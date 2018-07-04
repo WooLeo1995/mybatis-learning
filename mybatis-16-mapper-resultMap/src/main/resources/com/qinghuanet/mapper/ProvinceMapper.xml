@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.ProvinceMapper">
+
+    <resultMap id="provinceMap" type="Province">
+        <collection property="citys" ofType="City" column="id" select="com.qinghuanet.mapper.CityMapper.findByProvinceId"/>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="provinceMap">
+        select * from province where id = #{id}
+    </select>
+</mapper>

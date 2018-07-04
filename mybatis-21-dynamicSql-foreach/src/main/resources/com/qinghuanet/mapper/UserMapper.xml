@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.UserMapper">
+
+    <select id="findByIds" parameterType="list" resultType="User">
+        select * from user
+        <where>
+            <!--
+                collection	要遍历的集合
+                open		开始符
+                item		被遍历到的元素
+                separator	每次遍历之间的分隔符
+                close		结束符
+                index		自增量，索引
+
+                注意：
+                    如果传递的参数是集合，coolection必须写list，如果参数是数组，coolection必须写array
+
+                    如果在collection属性中要使用特定的参数名称，需要在参数声明上加上@Param(..)注解
+             -->
+            <foreach collection="list" item="id" open="id in(" separator="," close=")" index="i">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+
+    <insert id="batchSave" parameterType="map">
+        insert into user(name, mobile, birthday, email) values
+        <trim suffixOverrides=",">
+            <!--
+                参数是map时，可以选择keys或values进行迭代
+            -->
+            <!--<foreach collection="users.values" item="user" separator=",">
+                (#{user.name}, #{user.mobile}, #{user.birthday}, #{user.email})
+            </foreach>-->
+
+            <foreach collection="users.keys" item="key" separator=",">
+                (#{users[${key}].name}, #{users[${key}].mobile}, #{users[${key}].birthday}, #{users[${key}].email})
+            </foreach>
+        </trim>
+    </insert>
+</mapper>

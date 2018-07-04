@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.UserMapper">
+
+    <select id="findById" parameterType="int" resultType="User">
+        select * from user where id = #{id}
+    </select>
+
+    <!--
+		数据变更语句 insert，update 和 delete 的实现非常接近：
+			flushCache			// 刷新缓存
+			statementType		// statement类型
+			keyProperty			// 将数据库自动生成的主键值应用到指定的属性上
+			keyColumn			// 通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的
+			useGeneratedKeys	// 取出数据库自动生成的主键值（需要数据库支持自增）
+			timeout				// 等待响应的超时时间，单位：秒
+
+		【其他属性与select一致】
+	 -->
+    <insert id="saveUser"
+            parameterType="User"
+            flushCache="true"
+            statementType="PREPARED"
+            keyProperty="id"
+            keyColumn="id"
+            useGeneratedKeys="true"
+            timeout="20">
+        <!-- mybatis的另一种获取自动生成主键的方式 -->
+        <!--
+            <selectKey keyProperty="id" resultType="int" order="AFTER">
+                select last_insert_id()
+            </selectKey>
+         -->
+        insert into user values(null, #{name}, #{mobile}, #{birthday}, #{email}, null);
+    </insert>
+</mapper>

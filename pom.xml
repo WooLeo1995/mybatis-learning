@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.qinghuanet</groupId>
+    <artifactId>mybatis-learning</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>mybatis-01-start</module>
+        <module>mybatis-02-config-properties</module>
+        <module>mybatis-03-config-settings-cacheEnabled</module>
+        <module>mybatis-04-config-settings-lazyLoadingEnabled</module>
+        <module>mybatis-05-config-settings-useColumnLabel</module>
+        <module>mybatis-06-config-settings-autoMappingBehavior</module>
+        <module>mybatis-07-config-settings-autoMappingUnknownColumnBehavior</module>
+        <module>mybatis-08-config-settings-defaultStatementTimeout</module>
+        <module>mybatis-09-config-settings-mapUnderscoreToCamelCase</module>
+        <module>mybatis-10-config-settings-localCacheScope</module>
+        <module>mybatis-11-config-typeHandlers</module>
+        <module>mybatis-12-config-environments</module>
+        <module>mybatis-13-mapper-select</module>
+        <module>mybatis-14-mapper-insert-update-delete</module>
+        <module>mybatis-15-mapper-parameterType</module>
+        <module>mybatis-16-mapper-resultMap</module>
+        <module>mybatis-17-mapper-sql</module>
+        <module>mybatis-18-dynamicSql-if</module>
+        <module>mybatis-19-dynamicSql-choose</module>
+        <module>mybatis-20-dynamicSql-trim-where-set</module>
+        <module>mybatis-21-dynamicSql-foreach</module>
+        <module>mybatis-spring</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <mybatis.version>3.4.5</mybatis.version>
+        <mysql.version>5.1.45</mysql.version>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+        <spring.version>4.3.13.RELEASE</spring.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <target>1.8</target>
+                    <source>1.8</source>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--加载外部的属性文件-->
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!--
+            指示MyBatis自动映射时若发现未知列（或未知属性类型）时的行为
+            有效值：
+                NONE    ：不做任何反应（不一致则不映射）
+                WARNING ：日志警告（项目中日志的等级应设置为WARN）
+                FAILING ：映射失败（抛出 SqlSessionException）
+
+            默认值：NONE
+        -->
+        <setting name="autoMappingUnknownColumnBehavior" value="NONE"/>
+    </settings>
+
+    <!--开启类型别名，仅用于减少类完全限定名的冗余-->
+    <typeAliases>
+        <package name="com.qinghuanet.domain"/>
+    </typeAliases>
+
+    <!--环境配置-->
+    <environments default="development">
+        <!--开发环境-->
+        <environment id="development">
+            <!--事务类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com\qinghuanet\mapper\UserMapper.xml"/>
+    </mappers>
+</configuration>

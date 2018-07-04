@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinghuanet.mapper.UserMapper">
+
+    <select id="findByEmail" parameterType="string" resultType="User">
+        select * from user
+        where
+        <!-- choose标签相当于if{ } else if{ } else{ } -->
+        <choose><!--字符串取值，value是直接取对象中的value属性，_parameter是MyBatis内置的用于保存参数的属性-->
+            <when test="value == 'qq'.toCharArray()">email like '%@qq.com%'</when>
+            <when test="_parameter == '163'">email like '%@163.com%'</when>
+            <when test="_parameter == '126'">email like '%@126.com%'</when>
+            <when test="_parameter == 'sina'">email like '%@sina.com%'</when>
+            <when test="_parameter == 'gmail'">email like '%@gmail.com%'</when>
+            <when test="_parameter == 'yahoo'">email like '%@yahoo.com%'</when>
+            <otherwise>
+                email like "%"#{email}"%"
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

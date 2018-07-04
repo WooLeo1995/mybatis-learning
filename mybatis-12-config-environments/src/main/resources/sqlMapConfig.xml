@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--
+        尽管environments中可以设置多个环境，但每个SqlSessionFactory只能选择其一
+        为了指定创建何种环境，只需将环境id作为可选的参数传递给SqlSessionFactoryBuilder即可
+        备注：
+            若build时忽略了环境id参数，默认的环境将会被加载
+    -->
+	<environments default="development">
+        <!--为环境配置id，名称随意，保证唯一即可-->
+        <environment id="development">
+            <!--
+                事务管理器
+                有效值：
+                    JDBC    ：这个设置就是使用了JDBC的提交和回滚，它依赖于从数据源得到的连接来管理事务的作用域
+                    MANAGED ：这个设置几乎什么都没做，它从来不提交或回滚一个事务，而是让容器（JBOSS，Weblogic）来管理事务的整个生命周期
+                            ：如果应用程序没有使用容器，那么所有的修改操作都不生效，因为MANAGED从不提交一个事务
+
+                备注：
+                    如果你正在使用Spring整合MyBatis，则没有必要配置事务管理器，因为Spring模块会使用自带的事务管理器来覆盖前面的设置
+            -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--
+                数据源
+                有效值：
+                    UNPOOLED    ：这个数据源的实现只是每次被请求时打开和关闭连接
+                    POOLED      ：这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间
+                    JNDI        ：这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用
+            -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/test"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+
+                <!-- 最大的活动连接数（正在使用），默认值：10 -->
+                <property name="poolMaximumActiveConnections" value="20"/>
+
+                <!-- 最大的空闲连接数 -->
+                <property name="poolMaximumIdleConnections" value="5"/>
+
+                <!-- 在被强制返回之前，池中连接被检出（checked out）时间 -->
+                <!-- 这个设置暂认为是一个连接的过期时间，当连接过期时，就会被清出活动连接池，以将新的连接加入到活动连接池 -->
+                <property name="poolMaximumCheckoutTime" value="20000"/>
+
+                <!-- 当活动连接池已满时，线程等待重新检查活动连接池的时间 -->
+                <property name="poolTimeToWait" value="2000"/>
+            </dataSource>
+        </environment>
+    </environments>
+</configuration>
